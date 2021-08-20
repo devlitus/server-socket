@@ -1,9 +1,9 @@
-const{ io} = require('../index');
+const { io } = require("../index");
 
-io.on('connection', client => {
-  console.log('client connection');
+io.on("connection", (client) => {
+  console.log("client connection");
 
-  client.on('disconnect', () => {
-    console.warn('client disconnect');
-  })
+  client.on("disconnect", () => {
+    console.warn("client disconnect");
+  });
 });
