@@ -1,27 +1,26 @@
-const express = require('express')
-const path = require('path');
-
-require('dotenv').config()
+const express = require("express");
+require("dotenv").config();
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
-
+//  middelware
 app.use(express.json());
-// Path public
-const publicPath = path.resolve(__dirname, 'public');
-app.use(express.static(publicPath));
-
+app.use(cors());
 
 // Node Server
-const server = require('http').createServer(app);
-module.exports.io = require('socket.io')(server);
-require('./sockets/socket');
+const server = require("http").createServer(app);
+module.exports.io = require("socket.io")(server, {
+  cors: { origin: true, credencials: true },
+});
+require("./sockets/socket");
 
-app.get('/', (res, req) => {})
-
+// Path public
+const publicPath = path.resolve(__dirname, "public");
+app.use(express.static(publicPath));
 
 // Active server
 server.listen(process.env.PORT, (err) => {
-  if(err) throw new Error(err);
+  if (err) throw new Error(err);
   console.info(`Server up on port ${process.env.PORT}`);
-})
-
+});
